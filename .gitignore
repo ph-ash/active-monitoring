@@ -1,4 +1,5 @@
 .idea
+config/application/phash.yaml
 
 ###> symfony/framework-bundle ###
 /.env.local
