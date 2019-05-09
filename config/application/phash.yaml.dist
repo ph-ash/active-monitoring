@@ -1,0 +1,26 @@
+phash:
+  active_monitoring:
+    mysql:
+      defaults:
+        connection:
+          user: a_user
+          pass: a_pass
+          host: a_host
+        monitorings:
+          cron: '0 * * * *'
+          priority: 1
+      monitorings:
+        monitoring id 1:
+          connection:
+            user: another_user
+            pass: another_pass
+          connector:
+            sql: SELECT foo, x FROM bar
+          monitoring:
+            cron: '* * * * *'
+            failure_conditions:
+              - (foo > 5) && x == 0
+            payload: Foo is {foo} and x is {x}
+            idleTimeoutInSeconds: 120
+            priority: 1
+            path: ~
