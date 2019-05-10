@@ -6,12 +6,11 @@ namespace App\Connector\Mysql;
 
 use App\Configuration\DTO\MonitoringConfiguration;
 use App\Plugin\Plugin;
-use stdClass;
 
 class MysqlPlugin implements Plugin
 {
-    public function execute(MonitoringConfiguration $configuration): stdClass
+    public function execute(MonitoringConfiguration $configuration): array
     {
-        return new stdClass();
+        return [];
     }
 }
