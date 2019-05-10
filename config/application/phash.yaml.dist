@@ -16,7 +16,7 @@ phash:
             pass: another_pass
           connector:
             sql: SELECT foo, x FROM bar
-          monitoring:
+          options:
             cron: '* * * * *'
             failure_conditions:
               - (foo > 5) && x == 0
