@@ -61,7 +61,7 @@ class RootConfiguration implements ConfigurationInterface
                         ->children()
                             ->append($connectionTreeBuilder->getRootNode()->isRequired())
                             ->append($monitoringTreeBuilder->getRootNode()->isRequired())
-                            ->arrayNode('monitoring')
+                            ->arrayNode('options')
                                 ->isRequired()
                                 ->children()
                                     ->scalarNode('cron')->isRequired()->cannotBeEmpty()->end()

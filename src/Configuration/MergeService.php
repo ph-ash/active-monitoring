@@ -31,7 +31,7 @@ class MergeService implements Merge
                     $monitoring['connection'] = array_merge($defaultsConnection, $connection);
                 }
                 if (!empty($defaultsMonitorings)) {
-                    $monitoring['monitoring'] = array_merge($defaultsMonitorings, $monitoring['monitoring']);
+                    $monitoring['options'] = array_merge($defaultsMonitorings, $monitoring['options']);
                 }
                 $monitorings[$monitoringKey] = $monitoring;
             }
