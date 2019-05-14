@@ -15,7 +15,7 @@ services:
             $projectDirectory: '%kernel.project_dir%'
 
     _instanceof:
-        App\Configuration\ConnectorConfiguration:
+        App\Connector\Configuration:
             tags: ['phash.active_monitoring.connector.configuration']
 
     # makes classes in src/ available to be used as services

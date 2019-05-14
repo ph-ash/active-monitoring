@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Configuration;
 
+use App\Connector\Configuration as ConnectorConfiguration;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

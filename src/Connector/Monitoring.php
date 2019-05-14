@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Plugin;
+namespace App\Connector;
 
 use App\Configuration\DTO\MonitoringConfiguration;
 
-interface Plugin
+interface Monitoring
 {
     public function execute(MonitoringConfiguration $configuration): array;
 }

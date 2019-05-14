@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Configuration;
+namespace App\Connector;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
-interface ConnectorConfiguration
+interface Configuration
 {
     public function getConnectionConfigurationNode(TreeBuilder $builder): void;
 

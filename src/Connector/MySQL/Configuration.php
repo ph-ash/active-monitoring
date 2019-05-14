@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Connector\MySQL;
 
-use App\Configuration\ConnectorConfiguration;
+use App\Connector\Configuration as ConfigurationInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
-class Configuration implements ConnectorConfiguration
+class Configuration implements ConfigurationInterface
 {
     public function getConnectionConfigurationNode(TreeBuilder $builder): void
     {
