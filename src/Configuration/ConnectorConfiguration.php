@@ -11,6 +11,4 @@ interface ConnectorConfiguration
     public function getConnectionConfigurationNode(TreeBuilder $builder): void;
 
     public function getMonitoringConfigurationNode(TreeBuilder $builder): void;
-
-    public function getConnectorName(): string;
 }

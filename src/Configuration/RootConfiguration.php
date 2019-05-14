@@ -32,7 +32,8 @@ class RootConfiguration implements ConfigurationInterface
 
     private function buildConnectorConfiguration(ConnectorConfiguration $connectorConfiguration): NodeDefinition
     {
-        $connectorNode = new TreeBuilder($connectorConfiguration->getConnectorName());
+        $fqcnFragments = explode('\\', get_class($connectorConfiguration));
+        $connectorNode = new TreeBuilder($fqcnFragments[count($fqcnFragments) - 2]);
 
         $connectionTreeBuilder = new TreeBuilder('connection');
         $connectorConfiguration->getConnectionConfigurationNode($connectionTreeBuilder);

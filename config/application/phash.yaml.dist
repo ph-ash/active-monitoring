@@ -1,6 +1,6 @@
 phash:
   active_monitoring:
-    mysql:
+    MySQL:
       defaults:
         connection:
           user: a_user

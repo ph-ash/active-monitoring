@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Connector\Mysql;
+namespace App\Connector\MySQL;
 
 use App\Configuration\ConnectorConfiguration;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
-class MysqlConfiguration implements ConnectorConfiguration
+class Configuration implements ConnectorConfiguration
 {
     public function getConnectionConfigurationNode(TreeBuilder $builder): void
     {
@@ -39,10 +39,5 @@ class MysqlConfiguration implements ConnectorConfiguration
                 ->scalarNode('sql')->end()
             ->end()
         ;
-    }
-
-    public function getConnectorName(): string
-    {
-        return 'mysql';
     }
 }
