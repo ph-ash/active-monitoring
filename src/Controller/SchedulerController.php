@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Configuration\Load;
 use Cron\CronExpression;
+use Enqueue\Client\Message;
 use Enqueue\Client\ProducerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +28,8 @@ class SchedulerController extends AbstractController
             foreach ($connector['monitorings'] as $monitoringKey => $monitoring) {
                 $cron = CronExpression::factory($monitoring['options']['cron']);
                 if ($cron->isDue()) {
-                    $producer->sendEvent('schedule', $serializer->serialize([$monitoringKey => $monitoring], JsonEncoder::FORMAT));
+                    $payload = $serializer->serialize($monitoring, JsonEncoder::FORMAT);
+                    $producer->sendEvent('schedule', new Message($payload, ['monitoring.key' => $monitoringKey]));
                     $scheduled++;
                 }
             }
