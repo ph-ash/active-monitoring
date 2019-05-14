@@ -5,25 +5,34 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Configuration\Load;
+use Cron\CronExpression;
+use Enqueue\Client\ProducerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class SchedulerController extends AbstractController
 {
     /**
      * @Route("/schedule", name="schedule")
      */
-    public function scheduleAction(Load $load)
+    public function scheduleAction(Load $load, ProducerInterface $producer, SerializerInterface $serializer)
     {
         $config = $load->load();
+        $scheduled = 0;
 
-        // TODO
-        //foreach ($config as ) {
-        //
-        //}
-        //$cron = CronExpression::factory('* * * * *');
+        foreach ($config['active_monitoring'] as $connector) {
+            foreach ($connector['monitorings'] as $monitoringKey => $monitoring) {
+                $cron = CronExpression::factory($monitoring['options']['cron']);
+                if ($cron->isDue()) {
+                    $producer->sendEvent('schedule', $serializer->serialize([$monitoringKey => $monitoring], JsonEncoder::FORMAT));
+                    $scheduled++;
+                }
+            }
+        }
 
-        return new JsonResponse($config);
+        return new Response(sprintf('%d monitorings scheduled', $scheduled));
     }
 }
