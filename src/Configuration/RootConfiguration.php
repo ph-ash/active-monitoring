@@ -67,7 +67,7 @@ class RootConfiguration implements ConfigurationInterface
                                 ->isRequired()
                                 ->children()
                                     ->scalarNode('cron')->isRequired()->cannotBeEmpty()->end()
-                                    ->arrayNode('failure_conditions')
+                                    ->arrayNode('failureConditions')
                                         ->isRequired()
                                         ->cannotBeEmpty()
                                         ->scalarPrototype()->cannotBeEmpty()->end()

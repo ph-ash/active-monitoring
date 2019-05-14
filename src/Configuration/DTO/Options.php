@@ -22,8 +22,8 @@ class Options
         int $idleTimeoutInSeconds,
         int $priority,
         ?string $path,
-        ?int $tileExpansionIntervalCount,
-        ?string $tileExpansionGrowthExpression
+        int $tileExpansionIntervalCount = null,
+        string $tileExpansionGrowthExpression = null
     ) {
         $this->cron = $cron;
         $this->failureConditions = $failureConditions;

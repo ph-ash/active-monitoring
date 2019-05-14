@@ -18,7 +18,7 @@ phash:
             sql: SELECT foo, x FROM bar
           options:
             cron: '* * * * *'
-            failure_conditions:
+            failureConditions:
               - (foo > 5) && x == 0
             payload: Foo is {foo} and x is {x}
             idleTimeoutInSeconds: 120
