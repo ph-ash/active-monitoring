@@ -11,16 +11,18 @@ class LoadService implements Load
 {
     private $merge;
     private $configuration;
+    private $projectDirectory;
 
-    public function __construct(Merge $merge, RootConfiguration $configuration)
+    public function __construct(Merge $merge, RootConfiguration $configuration, string $projectDirectory)
     {
         $this->merge = $merge;
         $this->configuration = $configuration;
+        $this->projectDirectory = $projectDirectory;
     }
 
     public function load(): array
     {
-        $configFromFile = Yaml::parseFile('config/application/phash.yaml');
+        $configFromFile = Yaml::parseFile($this->projectDirectory . '/config/application/phash.yaml');
         $configWithDefaultsMerged = $this->merge->mergeDefaults($configFromFile);
 
         $processor = new Processor();
