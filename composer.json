@@ -8,6 +8,8 @@
         "dragonmantank/cron-expression": "^2.3",
         "enqueue/amqp-lib": "^0.9.8",
         "enqueue/enqueue-bundle": "^0.9.8",
+        "kriswallsmith/buzz": "^1.0",
+        "nyholm/psr7": "^1.1",
         "sensio/framework-extra-bundle": "^5.3",
         "symfony/console": "4.2.*",
         "symfony/dotenv": "4.2.*",
