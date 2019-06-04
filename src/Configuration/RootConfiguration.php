@@ -27,7 +27,18 @@ class RootConfiguration implements ConfigurationInterface
             $node = $node->append($this->buildConnectorConfiguration($connectorConfiguration));
         }
 
-        $builder = $node->end()->end()->end()->end();
+        $builder = $node->end()
+            ->validate()
+                ->ifTrue(function ($values) {
+                    $monitoringIds = [];
+                    foreach ($values as $connector) {
+                        $monitoringIds = array_merge($monitoringIds, array_keys($connector['monitorings']));
+                    }
+                    return count($monitoringIds) !== count(array_unique($monitoringIds));
+                })
+                ->thenInvalid('one or more monitoring ids are duplicated, please keep monitoring ids unique')
+            ->end()
+            ->end()->end()->end();
         return $builder;
     }
 
