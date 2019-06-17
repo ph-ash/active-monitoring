@@ -4,7 +4,7 @@ phash:
       defaults:
         connection:
           user: a_user
-          pass: a_pass
+          password: a_pass
           host: a_host
         monitorings:
           cron: '0 * * * *'
@@ -13,7 +13,7 @@ phash:
         monitoring id 1:
           connection:
             user: another_user
-            pass: another_pass
+            password: another_pass
           connector:
             sql: SELECT foo, x FROM bar
           options:

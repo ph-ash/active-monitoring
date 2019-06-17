@@ -16,18 +16,18 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('host')->cannotBeEmpty()->example('localhost')->end()
                 ->integerNode('port')->defaultValue(3306)->end()
                 ->scalarNode('user')->cannotBeEmpty()->end()
-                ->scalarNode('pass')->cannotBeEmpty()->end()
+                ->scalarNode('password')->cannotBeEmpty()->end()
                 ->scalarNode('url')->cannotBeEmpty()->end()
             ->end()
             ->validate()
                 ->ifTrue(function ($values) {
-                    return !isset($values['url']) && !isset($values['host'], $values['port'], $values['user'], $values['pass']);
+                    return !isset($values['url']) && !isset($values['host'], $values['port'], $values['user'], $values['password']);
                 })
-                ->thenInvalid('please provide valid credentials (either an URL or host, port, user and pass)!')
+                ->thenInvalid('please provide valid credentials (either an URL or host, port, user and password)!')
                 ->ifTrue(function ($values) {
-                    return isset($values['url'], $values['host'], $values['port'], $values['user'], $values['pass']);
+                    return isset($values['url'], $values['host'], $values['port'], $values['user'], $values['password']);
                 })
-                ->thenInvalid('you provided both an URL and host, port, user and pass - please provide just one!')
+                ->thenInvalid('you provided both an URL and host, port, user and password - please provide just one!')
             ->end()
         ;
     }
