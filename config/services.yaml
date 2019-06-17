@@ -12,11 +12,15 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         bind:
             $connectorConfigurations: !tagged phash.active_monitoring.connector.configuration
+            $connectorMonitorings: !tagged phash.active_monitoring.connector.monitoring
             $projectDirectory: '%kernel.project_dir%'
 
     _instanceof:
         App\Connector\Configuration:
             tags: ['phash.active_monitoring.connector.configuration']
+
+        App\Connector\Monitoring:
+            tags: ['phash.active_monitoring.connector.monitoring']
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
