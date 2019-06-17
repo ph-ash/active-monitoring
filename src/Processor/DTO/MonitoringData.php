@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Processor;
+namespace App\Processor\DTO;
 
 use DateTimeInterface;
 
-class MonitoringDataDTO
+class MonitoringData
 {
     /**
      * @var string
