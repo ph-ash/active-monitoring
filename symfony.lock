@@ -17,6 +17,9 @@
     "doctrine/collections": {
         "version": "v1.6.1"
     },
+    "doctrine/dbal": {
+        "version": "v2.9.2"
+    },
     "doctrine/event-manager": {
         "version": "v1.0.0"
     },
