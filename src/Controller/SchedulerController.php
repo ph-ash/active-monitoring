@@ -8,6 +8,7 @@ use App\Configuration\Load;
 use Cron\CronExpression;
 use Enqueue\Client\Message;
 use Enqueue\Client\ProducerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,7 +22,11 @@ class SchedulerController extends AbstractController
      */
     public function scheduleAction(Load $load, ProducerInterface $producer, SerializerInterface $serializer)
     {
-        $config = $load->load();
+        try {
+            $config = $load->load();
+        } catch (Exception $exception) {
+            return new Response(sprintf('error: %s', $exception->getMessage()), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
         $scheduled = 0;
 
         foreach ($config['active_monitoring'] as $connector) {
@@ -35,6 +40,6 @@ class SchedulerController extends AbstractController
             }
         }
 
-        return new Response(sprintf('%d monitorings scheduled', $scheduled));
+        return new Response(sprintf('success: %d monitorings scheduled', $scheduled));
     }
 }
