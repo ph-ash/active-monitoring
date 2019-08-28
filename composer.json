@@ -17,6 +17,7 @@
         "symfony/expression-language": "4.2.*",
         "symfony/flex": "^1.1",
         "symfony/framework-bundle": "4.2.*",
+        "symfony/monolog-bundle": "^3.4",
         "symfony/property-access": "4.2.*",
         "symfony/serializer": "4.2.*",
         "symfony/yaml": "4.2.*"
