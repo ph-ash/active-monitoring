@@ -14,6 +14,7 @@ services:
             $connectorConfigurations: !tagged phash.active_monitoring.connector.configuration
             $connectorMonitorings: !tagged phash.active_monitoring.connector.monitoring
             $projectDirectory: '%kernel.project_dir%'
+            $producer: '@enqueue.client.default.producer'
 
     _instanceof:
         App\Connector\Configuration:

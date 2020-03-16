@@ -1,0 +1,9 @@
+services:
+    _defaults:
+        autowire: true
+
+    Phash\Client:
+        class: Phash\ClientPSR
+        arguments:
+            $baseUri: "http://localhost" # TODO: configure from outside
+            $apiToken: "pleaseChooseASecretTokenForThePublicAPI" # TODO: configure from outside
