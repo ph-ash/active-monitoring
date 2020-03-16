@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Configuration\DTO\MonitoringConfiguration;
-use App\Configuration\Load;
 use App\Connector\Monitoring;
 use App\Evaluation\Evaluate;
 use App\Processor\Phash;
+use App\Processor\ScheduleProcessor;
 use Exception;
 use LogicException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,12 +28,14 @@ class ExecuteController extends AbstractController
     public function scheduleAction(
         string $monitoringId,
         MonitoringConfiguration $monitoringConfiguration,
-        Load $load,
         Evaluate $evaluate,
         Phash $phash,
+        Request $request,
         iterable $connectorMonitorings
     ) {
-        $connectorType = $this->findConnectorType($monitoringId, $load);
+        $monitoringId = urldecode($monitoringId);
+
+        $connectorType = $request->headers->get(strtolower(ScheduleProcessor::CONNECTOR_NAME_HEADER));
         if (!$connectorType) {
             throw new NotFoundHttpException(sprintf('monitoring id "%s" is not defined in the configuration file', $monitoringId));
         }
@@ -46,22 +49,9 @@ class ExecuteController extends AbstractController
 
         $pluginResult = $monitoringExecutor->execute($monitoringConfiguration);
         $evaluationResult = $evaluate->evaluateConditions($pluginResult, $monitoringConfiguration->getOptions()->getFailureConditions());
-        $phash->updateMonitoring($evaluationResult, $monitoringConfiguration);
+        $phash->updateMonitoring($monitoringId, $evaluationResult, $monitoringConfiguration, $pluginResult);
 
         return new Response(sprintf('executed monitoring id "%s" with connector "%s"', $monitoringId, $connectorType));
-    }
-
-    private function findConnectorType(string $monitoringId, Load $load): string
-    {
-        $config = $load->load();
-        $foundConnectorType = null;
-        foreach ($config['active_monitoring'] as $connectorType => $connector) {
-            if (isset($connector['monitorings'][$monitoringId])) {
-                $foundConnectorType = $connectorType;
-                break;
-            }
-        }
-        return $foundConnectorType;
     }
 
     private function findMonitoringExecutor(iterable $connectorMonitorings, string $foundConnectorType): Monitoring

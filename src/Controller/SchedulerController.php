@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Configuration\Load;
+use App\Processor\ScheduleProcessor;
 use Cron\CronExpression;
 use Enqueue\Client\Message;
 use Enqueue\Client\ProducerInterface;
@@ -29,12 +30,21 @@ class SchedulerController extends AbstractController
         }
         $scheduled = 0;
 
-        foreach ($config['active_monitoring'] as $connector) {
+        foreach ($config['active_monitoring'] as $connectorName => $connector) {
             foreach ($connector['monitorings'] as $monitoringKey => $monitoring) {
                 $cron = CronExpression::factory($monitoring['options']['cron']);
                 if ($cron->isDue()) {
                     $payload = $serializer->serialize($monitoring, JsonEncoder::FORMAT);
-                    $producer->sendEvent('schedule', new Message($payload, ['monitoring.key' => $monitoringKey]));
+                    $producer->sendEvent(
+                        'schedule',
+                        new Message(
+                            $payload,
+                            [
+                                ScheduleProcessor::MONITORING_KEY => $monitoringKey,
+                                ScheduleProcessor::CONNECTOR_NAME => $connectorName
+                            ]
+                        )
+                    );
                     $scheduled++;
                 }
             }

@@ -15,6 +15,15 @@ class EvaluateService implements Evaluate
         foreach ($failureConditions as $failureCondition) {
             $details[$failureCondition] = $expressionLanguage->evaluate($failureCondition, $pluginResult);
         }
-        return new Result(!in_array(false, $details, true), $details);
+        return new Result($this->allFailureConditionsMet($details), $details);
+    }
+
+    private function allFailureConditionsMet(array $details): bool
+    {
+        /*
+         * all failure conditions must be true in order to trigger a monitoring,
+         * therefore if any failure conditions is false, the monitoring should not trigger
+         */
+        return !in_array(false, $details, true);
     }
 }

@@ -6,18 +6,18 @@ namespace App\Evaluation;
 
 class Result
 {
-    private $value;
+    private $monitoringRed;
     private $details;
 
-    public function __construct(bool $value, array $details)
+    public function __construct(bool $monitoringRed, array $details)
     {
-        $this->value = $value;
+        $this->monitoringRed = $monitoringRed;
         $this->details = $details;
     }
 
-    public function isValue(): bool
+    public function isMonitoringRed(): bool
     {
-        return $this->value;
+        return $this->monitoringRed;
     }
 
     public function getDetails(): array
