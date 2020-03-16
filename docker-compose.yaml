@@ -1,0 +1,10 @@
+version: '3.5'
+
+services:
+  active:
+    image: phashboard/active
+    volumes:
+      - ./var/sqlite:/var/www/html/var/sqlite
+#    logging:
+#      driver: none
+    # TODO: disable logging

@@ -1,0 +1,9 @@
+.dockerignore
+.env.local
+.env.*.local
+.git*
+.idea
+.web-server-pid
+docker-compose*
+Dockerfile
+var/*

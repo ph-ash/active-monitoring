@@ -1,0 +1,2 @@
+# execute the scheduler every minute
+* * * * * /var/www/html/docker/requestUrl.sh GET /schedule
