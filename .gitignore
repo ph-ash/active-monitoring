@@ -1,4 +1,5 @@
 .idea
+.php-version
 config/application/phash.yaml
 
 ###> symfony/framework-bundle ###
