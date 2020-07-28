@@ -6,7 +6,10 @@ ENV APP_ENV=prod
 RUN composer install --no-scripts --ignore-platform-reqs \
     && composer dump-autoload --optimize \
     && composer run auto-scripts \
-    && php bin/console enqueue:setup-broker
+    && mkdir -p /var/www/html/var/sqlite \
+    && php bin/console doctrine:database:create \
+    && php bin/console enqueue:setup-broker \
+    && chmod -R a+w /var/www/html/var/sqlite
 
 # next stage #
 
@@ -31,7 +34,10 @@ RUN apk add --no-cache php7-fpm \
        supervisor \
        fcgi \
     && cp docker/*-fpm.conf /etc/php7/php-fpm.d/ \
+    && chown root. -R /var/www/html/var/sqlite \
     && php bin/console cache:warmup \
     && crontab /var/www/html/docker/crontab
+
+EXPOSE 9000
 
 ENTRYPOINT ["supervisord", "--configuration", "/var/www/html/docker/supervisord.conf"]

@@ -4,7 +4,21 @@ services:
   active:
     image: phashboard/active
     volumes:
-      - ./var/sqlite:/var/www/html/var/sqlite
+      #- ./var/sqlite:/var/www/html/var/sqlite
+      - static-assets:/var/www/html/public
 #    logging:
 #      driver: none
     # TODO: disable logging
+
+  nginx:
+    image: phashnginxactive
+    ports:
+      - 80:80
+    volumes:
+      - static-assets:/var/www/html/public
+#    logging:
+#      driver: none
+# TODO: disable logging
+
+volumes:
+  static-assets: ~
